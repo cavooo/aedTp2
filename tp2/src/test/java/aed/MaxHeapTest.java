@@ -3,6 +3,7 @@ package aed;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+import java.util.Comparator;
 import java.util.NoSuchElementException;
 
 public class MaxHeapTest {
@@ -11,7 +12,8 @@ public class MaxHeapTest {
 
     @BeforeEach
     public void setUp() {
-        heap = new MaxHeap<Integer>();  // Inicializamos correctamente el heap
+        // Proporcionamos un Comparator para que MaxHeap funcione con enteros
+        heap = new MaxHeap<Integer>(Comparator.naturalOrder());
     }
 
     @Test
@@ -44,12 +46,12 @@ public class MaxHeapTest {
     @Test
     public void testDesencolar() {
         heap.encolar(15);
-        assertEquals(15, heap.get(0), "El elemento máximo debería ser 30 al desencolar");
+        assertEquals(15, heap.get(0), "El elemento máximo debería ser 15 al desencolar");
         heap.encolar(30);
         assertEquals(30, heap.get(0), "El elemento máximo debería ser 30 al desencolar");
         heap.encolar(20);
         heap.desencolar();
-        assertEquals(20, heap.get(0), "El elemento máximo debería ser 30 al desencolar");
+        assertEquals(20, heap.get(0), "El elemento máximo debería ser 20 al desencolar");
         assertEquals(2, heap.cardinalHeap(), "El cardinal debería ser 2 después de desencolar un elemento");
 
         assertEquals(20, heap.get(0), "El elemento máximo ahora debería ser 20");

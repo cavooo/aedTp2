@@ -3,6 +3,8 @@ package aed;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
+
+import java.util.Comparator;
 import java.util.NoSuchElementException;
 
 public class MinHeapTest {
@@ -11,7 +13,7 @@ public class MinHeapTest {
 
     @BeforeEach
     public void setUp() {
-        heap = new MinHeap<Integer>();  // Inicializamos correctamente el MinHeap
+        heap = new MinHeap<Integer>(Comparator.naturalOrder());
     }
 
     @Test

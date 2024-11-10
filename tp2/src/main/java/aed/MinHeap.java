@@ -1,18 +1,21 @@
 package aed;
-
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.NoSuchElementException;
 
-public class MinHeap<T extends Comparable<T>> {
+public class MinHeap<T> {
 
-    public ArrayList<T> minHeap;
-    public int altura;
-    public int cardinal;
+    private ArrayList<T> minHeap;
+    private Comparator<T> comparator;
+    private int altura;
+    private int cardinal;
 
-    public MinHeap() {
-        minHeap = new ArrayList<>();
-        altura = 0;
-        cardinal = 0;
+
+    public MinHeap(Comparator<T> comparator) {
+        this.minHeap = new ArrayList<>();
+        this.comparator = comparator;
+        this.altura = 0;
+        this.cardinal = 0;
     }
 
     public T primero() {
@@ -92,39 +95,41 @@ public class MinHeap<T extends Comparable<T>> {
 
     public void heapifyDown(int i) {
         T value = minHeap.get(i);
-
+    
         while (i < cardinal / 2) { // Mientras el nodo tenga al menos un hijo
             int hijoIzq = hijoIzq(i);
             int hijoDer = hijoDer(i);
             int smallestIdx = i;
-
+    
             // Verificamos cuál de los dos hijos es el menor
-            if (hijoIzq < cardinal && minHeap.get(hijoIzq).compareTo(minHeap.get(smallestIdx)) < 0) {
+            if (hijoIzq < cardinal && comparator.compare(minHeap.get(hijoIzq), minHeap.get(smallestIdx)) < 0) {
                 smallestIdx = hijoIzq;
             }
-
-            if (hijoDer < cardinal && minHeap.get(hijoDer).compareTo(minHeap.get(smallestIdx)) < 0) {
+    
+            if (hijoDer < cardinal && comparator.compare(minHeap.get(hijoDer), minHeap.get(smallestIdx)) < 0) {
                 smallestIdx = hijoDer;
             }
-
+    
             // Si el valor actual es menor que ambos hijos, terminamos
             if (smallestIdx == i) {
                 break;
             }
-
+    
             // Sino, realizamos el intercambio
             minHeap.set(i, minHeap.get(smallestIdx));
             i = smallestIdx; // Movemos el índice hacia abajo
         }
-
+    
         // Colocamos el valor original en la posición correcta
         minHeap.set(i, value);
     }
+    
 
     public void upHeap(int i) {
-        while (i > 0 && minHeap.get(i).compareTo(minHeap.get(padre(i))) < 0) {
+        while (i > 0 && comparator.compare(minHeap.get(i), minHeap.get(padre(i))) < 0) {
             cambiar(i, padre(i)); // Realizar el intercambio
             i = padre(i); // Subir al padre
         }
     }
+    
 }
